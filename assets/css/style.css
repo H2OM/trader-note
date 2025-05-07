@@ -50,7 +50,10 @@ body, html {
     height: 100%;
     background-color: #282828;
 }
-
+body {
+    padding-top: env(safe-area-inset-top);
+    padding-bottom: env(safe-area-inset-bottom);
+}
 input {
     background-color: unset;
     border: unset;
