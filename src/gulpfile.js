@@ -69,7 +69,7 @@ gulp.task("build-js", ()=>{
                 ],
             },
     }))
-    .pipe(gulp.dest('./assets/js/'))
+    .pipe(gulp.dest('./../assets/js/'))
     .pipe(browserSync.stream());
 });
 
