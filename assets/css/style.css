@@ -80,7 +80,7 @@ input:focus {
 .note {
     width: 90%;
     margin: 0 auto;
-    margin-top: 20px;
+    /*margin-top: 20px;*/
     height: calc(100vh - 40px);
     border: 1px solid #525252;
     border-radius: 7px;
