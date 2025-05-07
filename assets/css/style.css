@@ -45,6 +45,9 @@
     background-color: #464646;
 }
 body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
     background-color: #282828;
 }
 
