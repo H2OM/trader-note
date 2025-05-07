@@ -56,7 +56,7 @@ const App: React.FC = () => {
         if(currentSessionIndex !== -1) {
             allSessions[currentSessionIndex] = currentSession;
         } else {
-            allSessions.push(currentSession);
+            allSessions.unshift(currentSession);
         }
 
         setAllSessions(allSessions);
@@ -174,6 +174,23 @@ const App: React.FC = () => {
 
         startPriceInput.value = '';
         endPriceInput.value = '';
+    }
+
+    function clearSession () {
+        localStorage.removeItem('session');
+
+        setSessionInfo({
+            startSum: 0,
+            totalProfit: 0,
+            minOffer: 0,
+            maxOffer: 0,
+            offersProfit: 0,
+            offersLoss: 0,
+            date: ''
+        });
+        setOpenOffers([]);
+        setCloseOffers([]);
+        setLastOffer(null);
     }
 
     function openSessions () { allSessionRef.current?.classList.toggle('_show') }
@@ -310,7 +327,7 @@ const App: React.FC = () => {
                 <div className="note__block _sessions" ref={allSessionRef}>
                     <div className="note__block__name">Все сессии</div>
                     <div className="note__block__content">
-                        {ALL_SESSIONS.map((session)=> (
+                        {ALL_SESSIONS.map((session, i)=> (
                             <div key={session.date}
                                  className={"note__block__offer _session"}
                                  style={SESSION.date === session.date ? {border: "1px solid #575757"} : {}}>
@@ -343,6 +360,22 @@ const App: React.FC = () => {
                                         `${session.info.offersLoss} ₽ | ${((session.info.offersLoss / session.info.startSum) * 100).toFixed(2)}%`
                                     }
                                 </span>
+                                <div className={"note__block__offer__delete _right"} onClick={()=> {
+                                    if(!confirm('')) return;
+
+                                    SESSION.date === session.date && clearSession();
+
+                                    setAllSessions(prev => {
+                                        const updated = [...prev];
+                                        updated.splice(i, 1)
+
+                                        localStorage.setItem('allSessions', JSON.stringify(updated));
+
+                                        return updated;
+                                    });
+                                }}>
+                                    📛
+                                </div>
                             </div>
                         ))}
                     </div>
@@ -364,20 +397,7 @@ const App: React.FC = () => {
                             <button className={"note__footer__restart"} onClick={()=> {
                                 if(!confirm('')) return;
 
-                                localStorage.removeItem('session');
-
-                                setSessionInfo({
-                                    startSum: 0,
-                                    totalProfit: 0,
-                                    minOffer: 0,
-                                    maxOffer: 0,
-                                    offersProfit: 0,
-                                    offersLoss: 0,
-                                    date: ''
-                                });
-                                setOpenOffers([]);
-                                setCloseOffers([]);
-                                setLastOffer(null);
+                                clearSession();
                             }}>Новая сессия</button>
                         </div>
                     </>

@@ -175,6 +175,10 @@ input:focus {
     font-size: 8px;
     cursor: pointer;
 }
+.note__block__offer__delete._right {
+    left: unset;
+    right: 0;
+}
 .note__block__content [name='close-price'] {
     border: 1px solid #8b8b8b;
     border-radius: 5px;
