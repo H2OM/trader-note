@@ -90,6 +90,12 @@ const App: React.FC = () => {
     }, []);
 
     useEffect(()=> {
+        if(window.innerWidth < 1200) {
+
+        }
+    }, []);
+
+    useEffect(()=> {
         const recalcSession = {
             startSum: SESSION.startSum,
             totalProfit: 0,
@@ -197,49 +203,51 @@ const App: React.FC = () => {
 
     return (
         <div className="note">
-            <div className="note__header">
-                <label>
-                    Начальная сумма&nbsp;
-                    <input name="total-sum"
-                           value={SESSION.startSum === 0 ? '-' : SESSION.startSum + " ₽"}
-                           readOnly/>
-                </label>
-                <label>
-                    Общий доход&nbsp;
-                    <input name="total-profit"
-                           className={(SESSION.totalProfit > 0 ? '_green' : '_red')}
-                           value={SESSION.totalProfit === 0 ? '-' :
-                               `${SESSION.totalProfit.toFixed(2)} ₽ | ${((SESSION.totalProfit / SESSION.startSum) * 100).toFixed(2)}%`}
-                           readOnly/>
-                </label>
-                <label>
-                    Самая убыточная сделка&nbsp;
-                    <input name="min-offer"
-                           className={(SESSION.minOffer < 0 ? '_red' : '')}
-                           value={SESSION.minOffer === 0 ? '-' :
-                        `${SESSION.minOffer.toFixed(2)} ₽ | ${((SESSION.minOffer / SESSION.startSum) * 100).toFixed(2)}%`} readOnly/>
-                </label>
-                <label>
-                    Самая прибыльная сделка&nbsp;
-                    <input name="max-offer"
-                           className={(SESSION.maxOffer > 0 ? '_green' : '')}
-                           value={SESSION.maxOffer === 0 ? '-' :
-                        `${SESSION.maxOffer.toFixed(2)} ₽ | ${((SESSION.maxOffer / SESSION.startSum) * 100).toFixed(2)}%`} readOnly/>
-                </label>
-                <label>
-                    Доход со сделок&nbsp;
-                    <input name="offers=profit"
-                           className={(SESSION.offersProfit > 0 ? '_green' : '')}
-                           value={SESSION.offersProfit === 0 ? '-' :
-                        `${SESSION.offersProfit.toFixed(2)} ₽ | ${((SESSION.offersProfit / SESSION.startSum) * 100).toFixed(2)}%`} readOnly/>
-                </label>
-                <label>
-                    Расход со сделок&nbsp;
-                    <input name="offers-loss"
-                           className={(SESSION.offersLoss < 0 ? '_red' : '')}
-                           value={SESSION.offersLoss === 0 ? '-' :
-                        `${SESSION.offersLoss.toFixed(2)} ₽ | ${((SESSION.offersLoss / SESSION.startSum) * 100).toFixed(2)}%`} readOnly/>
-                </label>
+            <div className="note__header__container">
+                <div className="note__header">
+                    <label>
+                        Начальная сумма&nbsp;
+                        <input name="total-sum"
+                               value={SESSION.startSum === 0 ? '-' : SESSION.startSum + " ₽"}
+                               readOnly/>
+                    </label>
+                    <label>
+                        Общий доход&nbsp;
+                        <input name="total-profit"
+                               className={(SESSION.totalProfit > 0 ? '_green' : '_red')}
+                               value={SESSION.totalProfit === 0 ? '-' :
+                                   `${SESSION.totalProfit.toFixed(2)} ₽ | ${((SESSION.totalProfit / SESSION.startSum) * 100).toFixed(2)}%`}
+                               readOnly/>
+                    </label>
+                    <label>
+                        Самая убыточная сделка&nbsp;
+                        <input name="min-offer"
+                               className={(SESSION.minOffer < 0 ? '_red' : '')}
+                               value={SESSION.minOffer === 0 ? '-' :
+                            `${SESSION.minOffer.toFixed(2)} ₽ | ${((SESSION.minOffer / SESSION.startSum) * 100).toFixed(2)}%`} readOnly/>
+                    </label>
+                    <label>
+                        Самая прибыльная сделка&nbsp;
+                        <input name="max-offer"
+                               className={(SESSION.maxOffer > 0 ? '_green' : '')}
+                               value={SESSION.maxOffer === 0 ? '-' :
+                            `${SESSION.maxOffer.toFixed(2)} ₽ | ${((SESSION.maxOffer / SESSION.startSum) * 100).toFixed(2)}%`} readOnly/>
+                    </label>
+                    <label>
+                        Доход со сделок&nbsp;
+                        <input name="offers=profit"
+                               className={(SESSION.offersProfit > 0 ? '_green' : '')}
+                               value={SESSION.offersProfit === 0 ? '-' :
+                            `${SESSION.offersProfit.toFixed(2)} ₽ | ${((SESSION.offersProfit / SESSION.startSum) * 100).toFixed(2)}%`} readOnly/>
+                    </label>
+                    <label>
+                        Расход со сделок&nbsp;
+                        <input name="offers-loss"
+                               className={(SESSION.offersLoss < 0 ? '_red' : '')}
+                               value={SESSION.offersLoss === 0 ? '-' :
+                            `${SESSION.offersLoss.toFixed(2)} ₽ | ${((SESSION.offersLoss / SESSION.startSum) * 100).toFixed(2)}%`} readOnly/>
+                    </label>
+                </div>
             </div>
             <div className="note__body">
                 <div className="note__block">
@@ -328,9 +336,7 @@ const App: React.FC = () => {
                     <div className="note__block__name">Все сессии</div>
                     <div className="note__block__content">
                         {ALL_SESSIONS.map((session, i)=> (
-                            <div key={session.date}
-                                 className={"note__block__offer _session"}
-                                 style={SESSION.date === session.date ? {border: "1px solid #575757"} : {}}>
+                            <div key={session.date} className={"note__block__offer__container"}>
                                 {SESSION.date === session.date ?
                                     <div className={"note__block__mark"}>💠</div> :
                                     <div className={"note__block__mark"} style={{cursor: "pointer"}}
@@ -342,26 +348,29 @@ const App: React.FC = () => {
                                              session.lastOffer !== undefined && setLastOffer(session.lastOffer);
                                          }}>🔗</div>
                                 }
-                                <span>{session.date}</span>
-                                <span>{session.info.startSum}</span>
-                                <span>{session.closeOffers?.length}</span>
-                                <span className={(session.info.totalProfit > 0 ? '_green' : '_red')}>
-                                    {session.info.totalProfit === 0 ? '-' :
-                                        `${session.info.totalProfit} ₽ | ${((session.info.totalProfit / session.info.startSum) * 100).toFixed(2)}%`
-                                    }
-                                </span>
-                                <span className={(session.info.offersProfit > 0 ? '_green' : '')}>
-                                    {session.info.offersProfit === 0 ? '-' :
-                                        `${session.info.offersProfit} ₽ | ${((session.info.offersProfit / session.info.startSum) * 100).toFixed(2)}%`
-                                    }
-                                </span>
-                                <span className={(session.info.offersLoss < 0 ? '_red' : '')}>
-                                    {session.info.offersLoss === 0 ? '-' :
-                                        `${session.info.offersLoss} ₽ | ${((session.info.offersLoss / session.info.startSum) * 100).toFixed(2)}%`
-                                    }
-                                </span>
-                                <div className={"note__block__offer__delete _right"} onClick={()=> {
-                                    if(!confirm('')) return;
+                                <div className={"note__block__offer _session"}
+                                     style={SESSION.date === session.date ? {border: "1px solid #575757"} : {}}>
+                                    <span>{session.date}</span>
+                                    <span>{session.info.startSum}</span>
+                                    <span>{session.closeOffers?.length}</span>
+                                    <span className={(session.info.totalProfit > 0 ? '_green' : '_red')}>
+                                        {session.info.totalProfit === 0 ? '-' :
+                                            `${session.info.totalProfit} ₽ | ${((session.info.totalProfit / session.info.startSum) * 100).toFixed(2)}%`
+                                        }
+                                    </span>
+                                    <span className={(session.info.offersProfit > 0 ? '_green' : '')}>
+                                        {session.info.offersProfit === 0 ? '-' :
+                                            `${session.info.offersProfit} ₽ | ${((session.info.offersProfit / session.info.startSum) * 100).toFixed(2)}%`
+                                        }
+                                    </span>
+                                    <span className={(session.info.offersLoss < 0 ? '_red' : '')}>
+                                        {session.info.offersLoss === 0 ? '-' :
+                                            `${session.info.offersLoss} ₽ | ${((session.info.offersLoss / session.info.startSum) * 100).toFixed(2)}%`
+                                        }
+                                    </span>
+                                </div>
+                                <div className={"note__block__offer__delete _right"} onClick={() => {
+                                    if (!confirm('')) return;
 
                                     SESSION.date === session.date && clearSession();
 
@@ -386,9 +395,11 @@ const App: React.FC = () => {
                     <>
                         <div className="note__footer__block">
                             <label>
-                                <input name="start-price" placeholder="Покупка" type={'number'} onKeyDown={(e)=> e.key === "Enter" && addNewOfferHandler(e)}/>
+                                <input name="start-price" placeholder="Покупка" type={'number'}
+                                       onKeyDown={(e) => e.key === "Enter" && addNewOfferHandler(e)}/>
                                 {" => "}
-                                <input name="end-price" placeholder="Продажа" type={'number'} onKeyDown={(e)=> e.key === "Enter" && addNewOfferHandler(e)}/>
+                                <input name="end-price" placeholder="Продажа" type={'number'}
+                                       onKeyDown={(e) => e.key === "Enter" && addNewOfferHandler(e)}/>
                             </label>
                             <button onClick={addNewOfferHandler}>Добавить</button>
                         </div>
