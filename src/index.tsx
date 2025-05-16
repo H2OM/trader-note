@@ -259,7 +259,7 @@ const App: React.FC = () => {
                             return (
                                 <div
                                     key={index}
-                                    className={"note__block__offer" + (PERCENT < 0.0 ? ' _red' : PERCENT > 0.10 ? ' _super-green' : PERCENT > 0.05 ? " _green" : " _light-green")}>
+                                    className={"note__block__offer" + (PERCENT < 0.0 ? ' _red' : PERCENT > 0.10 ? ' _green' : PERCENT > 0.05 ? " _midi-green" : " _light-green")}>
                                     <div className={'note__block__offer__delete'} onClick={()=> {
                                         if(!confirm('')) return;
 

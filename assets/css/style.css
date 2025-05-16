@@ -25,7 +25,7 @@
 :root {
     --lightGreen: #57cb6a;
     --green: #30c148;
-    --superGreen: #1ad93a;
+    --midiGreen: #80c58b;
     --red: #e74949;
 }
 * {
@@ -203,8 +203,8 @@ input:focus {
 .note__block__offer._light-green {
     background-color: var(--lightGreen);
 }
-.note__block__offer._super-green {
-    background-color: var(--superGreen);
+.note__block__offer._midi-green {
+    background-color: var(--midiGreen);
 }
 .note__block__offer._session {
     border: 1px solid transparent;
