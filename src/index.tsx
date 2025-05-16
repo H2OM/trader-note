@@ -70,6 +70,8 @@ const App: React.FC = () => {
 
         if(!storageAllSessions) return;
 
+        console.log(storageAllSessions);
+
         const parsedStorage = JSON.parse(storageAllSessions) as StorageSession[];
 
         setAllSessions(parsedStorage);
@@ -79,8 +81,6 @@ const App: React.FC = () => {
         let storageSession = localStorage.getItem("session");
 
         if(!storageSession) return;
-
-        console.log(storageSession);
 
         const parsedStorage = JSON.parse(storageSession) as StorageSession;
 
