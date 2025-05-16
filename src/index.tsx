@@ -253,29 +253,33 @@ const App: React.FC = () => {
                 <div className="note__block">
                     <div className="note__block__name">Закрытые сделки</div>
                     <div className="note__block__content">
-                        {closeOffers.map((offer, index) => (
-                            <div
-                                key={index}
-                                className={"note__block__offer" + (offer.startPrice > offer.endPrice ? ' _red' : ' _green')}>
-                                <div className={'note__block__offer__delete'} onClick={()=> {
-                                    if(!confirm('')) return;
+                        {closeOffers.map((offer, index) => {
+                            const PERCENT = (((offer.endPrice - offer.startPrice) / offer.startPrice) * 100);
 
-                                    setCloseOffers(prev => {
-                                        const updated = [...prev];
-                                        const deleted = updated.splice(index, 1)[0];
+                            return (
+                                <div
+                                    key={index}
+                                    className={"note__block__offer" + (PERCENT < 0.0 ? ' _red' : PERCENT > 0.10 ? ' _super-green' : PERCENT > 0.05 ? "_green" : "light-green")}>
+                                    <div className={'note__block__offer__delete'} onClick={()=> {
+                                        if(!confirm('')) return;
 
-                                        if(lastOffer?.startPrice === deleted.startPrice && lastOffer.endPrice === deleted.endPrice) {
-                                            setLastOffer(updated.length > 0 ? updated[0] as Offer : null);
-                                        }
+                                        setCloseOffers(prev => {
+                                            const updated = [...prev];
+                                            const deleted = updated.splice(index, 1)[0];
 
-                                        return updated;
-                                    });
-                                }}>📛</div>
-                                <span>{offer.startPrice} =&gt; {offer.endPrice}</span>
-                                <span>{(offer.endPrice - offer.startPrice).toFixed(2)} ₽</span>
-                                <span>{(((offer.endPrice - offer.startPrice) / offer.startPrice) * 100).toFixed(2)}%</span>
-                            </div>
-                        ))}
+                                            if(lastOffer?.startPrice === deleted.startPrice && lastOffer.endPrice === deleted.endPrice) {
+                                                setLastOffer(updated.length > 0 ? updated[0] as Offer : null);
+                                            }
+
+                                            return updated;
+                                        });
+                                    }}>📛</div>
+                                    <span>{offer.startPrice} =&gt; {offer.endPrice}</span>
+                                    <span>{(offer.endPrice - offer.startPrice).toFixed(2)} ₽</span>
+                                    <span>{PERCENT.toFixed(2)}%</span>
+                                </div>
+                            )
+                        })}
                     </div>
                 </div>
                 <div className="note__block">

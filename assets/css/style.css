@@ -23,7 +23,9 @@
     src: url('/assets/fonts/RobotoFlexLatinExt.woff2') format('woff2');
 }
 :root {
+    --lightGreen: #57cb6a;
     --green: #30c148;
+    --superGreen: #1ad93a;
     --red: #e74949;
 }
 * {
@@ -197,6 +199,12 @@ input:focus {
 
 .note__block__offer._green {
     background-color: var(--green);
+}
+.note__block__offer._light-green {
+    background-color: var(--lightGreen);
+}
+.note__block__offer._super-green {
+    background-color: var(--superGreen);
 }
 .note__block__offer._session {
     border: 1px solid transparent;
