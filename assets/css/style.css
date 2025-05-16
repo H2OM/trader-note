@@ -23,9 +23,9 @@
     src: url('/assets/fonts/RobotoFlexLatinExt.woff2') format('woff2');
 }
 :root {
-    --lightGreen: #57cb6a;
+    --lightGreen: #80c58b;
     --green: #30c148;
-    --midiGreen: #80c58b;
+    --midiGreen: #57cb6a;
     --red: #e74949;
 }
 * {
