@@ -80,6 +80,8 @@ const App: React.FC = () => {
 
         if(!storageSession) return;
 
+        console.log(storageSession);
+
         const parsedStorage = JSON.parse(storageSession) as StorageSession;
 
         setSessionInfo(parsedStorage.info);
@@ -87,12 +89,6 @@ const App: React.FC = () => {
         parsedStorage.closeOffers !== undefined && setCloseOffers(parsedStorage.closeOffers);
         parsedStorage.openOffers !== undefined && setOpenOffers(parsedStorage.openOffers);
         parsedStorage.lastOffer !== undefined && setLastOffer(parsedStorage.lastOffer);
-    }, []);
-
-    useEffect(()=> {
-        if(window.innerWidth < 1200) {
-
-        }
     }, []);
 
     useEffect(()=> {
